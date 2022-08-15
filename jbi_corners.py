@@ -11,7 +11,7 @@ HEIGHT = 3
 WIDTH = 6
 BROKER = 'localhost:9092'
 OUTPUT_TOPIC = "FREIA_detector"
-FIRST_ID = 1
+FIRST_ID = 0
 
 
 config = {"bootstrap.servers": BROKER}
@@ -26,7 +26,7 @@ CONFIG_JSON = {
             "data_brokers": ["localhost:9092"],
             "data_topics": ["FREIA_detector"],
             "tof_range": [0, 100000000],
-            "det_range": [FIRST_ID, WIDTH * HEIGHT + FIRST_ID],
+            "det_range": [FIRST_ID, 100000000],
             "width": WIDTH,
             "height": HEIGHT,
             "topic": "local_visualisation",

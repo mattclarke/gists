@@ -12,7 +12,7 @@ CONFIG_JSON = {
             "data_brokers": ["localhost:9092"],
             "data_topics": ["FREIA_detector"],
             "tof_range": [0, 100000000],
-            "det_range": [0, 147456],
+            "first_det_id": [0, 999999999],
             "width": 128,
             "height": 1152,
             "topic": "local_visualisation",
