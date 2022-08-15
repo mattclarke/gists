@@ -7,30 +7,29 @@ import numpy as np
 from matplotlib import pyplot as plt
 from fast_histogram import histogram1d
 
-HEIGHT = 3
-WIDTH = 6
+HEIGHT = 4
+WIDTH = 5
 BROKER = 'localhost:9092'
 OUTPUT_TOPIC = "FREIA_detector"
-FIRST_ID = 1
+SOURCE = "roitest"
 
 
 config = {"bootstrap.servers": BROKER}
 producer = Producer(**config)
 
-
 CONFIG_JSON = {
     "cmd": "config",
     "histograms": [
         {
-            "type": "dethist",
+            "type": "roihist",
             "data_brokers": ["localhost:9092"],
             "data_topics": ["FREIA_detector"],
             "tof_range": [0, 100000000],
-            "det_range": [FIRST_ID, WIDTH * HEIGHT + FIRST_ID],
-            "width": WIDTH,
-            "height": HEIGHT,
+            "left_edges": [6, 11],
+            "width": 3,
             "topic": "local_visualisation",
-            "id": "some_id"
+            "id": "roi",
+            "source": SOURCE
         }
     ]
 }
@@ -42,15 +41,14 @@ producer.flush()
 hist = histogram1d([], bins=WIDTH * HEIGHT, range=(0, WIDTH * HEIGHT))
 
 ids = []
-ids.extend(([float(0 + FIRST_ID)] * 20))
-ids.extend(([float(WIDTH - 1 + FIRST_ID)] * 30))
-ids.extend(([float(WIDTH * HEIGHT - WIDTH + FIRST_ID)] * 40))
-ids.extend(([float(WIDTH * HEIGHT - 1 + FIRST_ID)] * 50))
+ids.extend(([float(6)] * 20))
+ids.extend(([float(8)] * 30))
+ids.extend(([float(11)] * 40))
+ids.extend(([float(13)] * 50))
 
 for i in range(100):
     hist += histogram1d(ids, bins=WIDTH * HEIGHT, range=(0, WIDTH * HEIGHT))
-
-    buf = serialise_ev42('corners', i, 0, ids, ids)
+    buf = serialise_ev42(SOURCE, i, 0, ids, ids)
     producer.produce(OUTPUT_TOPIC, buf)
     producer.flush()
     time.sleep(0.5)

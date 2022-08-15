@@ -19,17 +19,6 @@ CONFIG_JSON = {
             "id": "some_id"
         }
         # {
-        #     "type": "dethist",
-        #     "data_brokers": ["localhost:9092"],
-        #     "data_topics": ["grace_detector"],
-        #     "tof_range": [0, 100000000],
-        #     "det_range": [1, 307200],
-        #     "width": 512,
-        #     "height": 600,
-        #     "topic": "local_visualisation",
-        #     "id": "some_id"
-        # }
-        # {
         #     "type": "hist1d",
         #     "data_brokers": ["172.30.242.19:9092"],
         #     "data_topics": ["monitor"],
