@@ -1,3 +1,4 @@
+import json
 import random
 import time
 
@@ -8,7 +9,7 @@ from confluent_kafka import Producer
 from matplotlib.cbook import get_sample_data
 from streaming_data_types import serialise_ev42
 
-OUTPUT_TOPIC = "grace_detector"
+OUTPUT_TOPIC = "FREIA_detector"
 BROKER = "localhost:9092"
 
 img = mpimg.imread(get_sample_data("grace_hopper.jpg"))
@@ -32,6 +33,27 @@ hist_data = np.zeros([img.shape[0], img.shape[1]])
 
 config = {"bootstrap.servers": BROKER}
 producer = Producer(**config)
+
+CONFIG_JSON = {
+    "cmd": "config",
+    "histograms": [
+        {
+            "type": "dethist",
+            "data_brokers": ["localhost:9092"],
+            "data_topics": ["FREIA_detector"],
+            "tof_range": [0, 100000000],
+            "det_range": [0, img.shape[0] * img.shape[1]],
+            "width": img.shape[1],
+            "height": img.shape[0],
+            "topic": "local_visualisation",
+            "id": "some_id",
+            "source": "grace",
+        }
+    ]
+}
+
+producer.produce("local_jbi_commands", bytes(json.dumps(CONFIG_JSON), "utf-8"))
+producer.flush()
 
 try:
     while True:

@@ -9,9 +9,7 @@ from matplotlib import pyplot as plt
 from fast_histogram import histogram1d
 
 HEIGHT = 1152
-
 WIDTH = 128
-
 BROKER = 'localhost:9092'
 OUTPUT_TOPIC = "FREIA_detector"
 
@@ -20,8 +18,6 @@ producer = Producer(**config)
 
 CONFIG_JSON = {
     "cmd": "config",
-    # "start": 1574837410000,
-    # "stop": 1574840366000,
     "histograms": [
         {
             "type": "dethist",
