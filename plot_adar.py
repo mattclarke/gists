@@ -5,8 +5,8 @@ import numpy as np
 from confluent_kafka import Consumer, TopicPartition
 from streaming_data_types import deserialise_ADAr
 
-TOPIC = "FREIA_detector"
-BROKER = "localhost:9092"
+TOPIC = "ymir_camera"
+BROKER = "10.100.1.19:9092"
 
 consumer = Consumer(
     {
