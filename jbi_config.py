@@ -1,11 +1,6 @@
 import json
-import time
 
-from streaming_data_types import serialise_ev42
 from confluent_kafka import Producer
-import numpy as np
-from matplotlib import pyplot as plt
-from fast_histogram import histogram1d
 
 
 HEIGHT = 51
@@ -33,7 +28,7 @@ CONFIG_JSON = {
             "height": HEIGHT,
             "topic": "local_visualisation",
             "id": "some_id",
-            "start": 1667976659961,
+            "source": "grace",
         }
     ]
 }
