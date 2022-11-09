@@ -20,6 +20,8 @@ producer = Producer(**config)
 
 CONFIG_JSON = {
     "cmd": "config",
+    "start": 1667978333812,
+    "stop": 1667978433812,
     "histograms": [
         {
             "type": "dethist",
