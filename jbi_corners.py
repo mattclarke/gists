@@ -10,7 +10,7 @@ from fast_histogram import histogram1d
 HEIGHT = 3
 WIDTH = 6
 BROKER = 'localhost:9092'
-OUTPUT_TOPIC = "FREIA_detector"
+OUTPUT_TOPIC = "local_detector"
 FIRST_ID = 0
 
 
@@ -24,7 +24,7 @@ CONFIG_JSON = {
         {
             "type": "dethist",
             "data_brokers": ["localhost:9092"],
-            "data_topics": ["FREIA_detector"],
+            "data_topics": [OUTPUT_TOPIC],
             "tof_range": [0, 100000000],
             "det_range": [FIRST_ID, 100000000],
             "width": WIDTH,

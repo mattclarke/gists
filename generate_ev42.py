@@ -9,7 +9,7 @@ from confluent_kafka import Producer
 from matplotlib.cbook import get_sample_data
 from streaming_data_types import serialise_ev42
 
-OUTPUT_TOPIC = "FREIA_detector"
+OUTPUT_TOPIC = "local_detector"
 BROKER = "localhost:9092"
 
 img = mpimg.imread(get_sample_data("grace_hopper.jpg"))
@@ -39,8 +39,8 @@ CONFIG_JSON = {
     "histograms": [
         {
             "type": "dethist",
-            "data_brokers": ["localhost:9092"],
-            "data_topics": ["FREIA_detector"],
+            "data_brokers": [BROKER],
+            "data_topics": [OUTPUT_TOPIC],
             "tof_range": [0, 100000000],
             "det_range": [0, img.shape[0] * img.shape[1]],
             "width": img.shape[1],

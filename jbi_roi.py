@@ -10,7 +10,7 @@ from fast_histogram import histogram1d
 HEIGHT = 4
 WIDTH = 5
 BROKER = 'localhost:9092'
-OUTPUT_TOPIC = "FREIA_detector"
+OUTPUT_TOPIC = "local_detector"
 SOURCE = "roitest"
 
 
@@ -23,7 +23,7 @@ CONFIG_JSON = {
         {
             "type": "roihist",
             "data_brokers": ["localhost:9092"],
-            "data_topics": ["FREIA_detector"],
+            "data_topics": [OUTPUT_TOPIC],
             "tof_range": [0, 100000000],
             "left_edges": [6, 11],
             "width": 3,
