@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from confluent_kafka import Producer
 from matplotlib.cbook import get_sample_data
-from streaming_data_types import serialise_ev42
+from streaming_data_types import serialise_ev44
 
 OUTPUT_TOPIC = "local_detector"
 BROKER = "localhost:9092"
@@ -36,7 +36,8 @@ producer = Producer(**config)
 
 CONFIG_JSON = {
     "cmd": "config",
-    "input_schema": "ev42",
+    "input_schema": "ev44",
+    "output_schema": "hs01",
     "histograms": [
         {
             "type": "dethist",
@@ -70,12 +71,16 @@ try:
                 det_ids.append(pixel)  # det ids start at 1
 
         time_ns = time.time_ns()
-        buffer = serialise_ev42("grace", time_ns, time_ns, det_ids, det_ids)
+        buffer = serialise_ev44("grace", time_ns, [time_ns], [0], det_ids, det_ids)
         producer.produce(OUTPUT_TOPIC, buffer)
         producer.flush()
         time.sleep(0.5)
 except:
     pass
+
+# with open("example_ev44_fb.dat", "wb") as file:
+#     file.write(buffer)
+# print(buffer)
 
 
 fig = plt.figure(1)

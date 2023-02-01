@@ -7,28 +7,28 @@ CONFIG_JSON = {
     # "start": 1574837410000,
     # "stop": 1574840366000,
     "histograms": [
-        {
-            "type": "dethist",
-            "data_brokers": ["localhost:9092"],
-            "data_topics": ["FREIA_detector"],
-            "tof_range": [0, 100000000],
-            "first_det_id": [0, 999999999],
-            "width": 128,
-            "height": 1152,
-            "topic": "local_visualisation",
-            "id": "some_id"
-        }
         # {
-        #     "type": "hist1d",
-        #     "data_brokers": ["172.30.242.19:9092"],
-        #     "data_topics": ["monitor"],
-        #     "tof_range": [0, 100_000_000],
-        #     "det_range": [0, 100_000_000],
-        #     "num_bins": 100,
-        #     "source": "Monitor_Adc0_Ch2",
-        #     "topic": "hist_topic3",
-        #     "id": "some_id1"
+        #     "type": "dethist",
+        #     "data_brokers": ["localhost:9092"],
+        #     "data_topics": ["local_events"],
+        #     "tof_range": [0, 100000000],
+        #     "first_det_id": [0, 999999999],
+        #     "width": 128,
+        #     "height": 1152,
+        #     "topic": "local_visualisation",
+        #     "id": "some_id"
         # }
+        {
+            "type": "hist1d",
+            "data_brokers": ["localhost:9092"],
+            "data_topics": ["local_events"],
+            "tof_range": [0, 100_000_000],
+            "det_range": [0, 100_000_000],
+            "num_bins": 100,
+            "source": "Monitor_Adc0_Ch2",
+            "topic": "local_visualisation",
+            "id": "some_id1"
+        }
         # {
         #     "type": "hist2d",
         #     "data_brokers": ["172.30.242.27:9092"],

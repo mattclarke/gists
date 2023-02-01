@@ -8,8 +8,7 @@ CONFIG_TOPIC = "local_forwarder_commands"
 BROKER = "localhost:9092"
 
 STREAMS = [
-    StreamInfo("IOC:m1.RBV", "f142", "local_motion", Protocol.Protocol.PVA),
-    StreamInfo("IOC:m1.VAL", "f142", "local_motion", Protocol.Protocol.PVA),
+    StreamInfo("SIMPLE:VALUE1", "f144", "local_motion", Protocol.Protocol.PVA),
   ]
 
 config = {"bootstrap.servers": BROKER}
