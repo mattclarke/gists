@@ -6,7 +6,7 @@ from confluent_kafka import Producer
 from matplotlib.cbook import get_sample_data
 from streaming_data_types import serialise_ADAr
 
-OUTPUT_TOPIC = "FREIA_detector"
+OUTPUT_TOPIC = "local_camera"
 BROKER = "localhost:9092"
 
 img = mpimg.imread(get_sample_data("grace_hopper.jpg"))
@@ -25,7 +25,7 @@ for x in range(img.shape[0]):
     img[x][img.shape[1] // 2] = 0
     img[x][img.shape[1] // 2 + 1] = 0
 
-config = {"bootstrap.servers": BROKER}
+config = {"bootstrap.servers": BROKER, "message.max.bytes": 100_000_000}
 producer = Producer(**config)
 
 while True:
