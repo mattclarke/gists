@@ -1,7 +1,7 @@
 import sys
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QColor, QPalette
-from PyQt5.QtWidgets import (
+from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QColor, QPalette
+from PyQt6.QtWidgets import (
     QApplication,
     QCheckBox,
     QComboBox,
@@ -105,4 +105,4 @@ app.setStyle("Fusion")
 
 w = MainWindow()
 w.show()
-app.exec_()
+app.exec()
