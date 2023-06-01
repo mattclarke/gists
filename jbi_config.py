@@ -3,8 +3,8 @@ import json
 from confluent_kafka import Producer
 
 
-HEIGHT = 51
-WIDTH = 60
+HEIGHT = 10
+WIDTH = 10
 BROKER = 'localhost:9092'
 OUTPUT_TOPIC = "local_detector"
 
@@ -15,8 +15,7 @@ producer = Producer(**config)
 
 CONFIG_JSON = {
     "cmd": "config",
-    "start": 1667978333812,
-    "stop": 1667978433812,
+    "interval": 10,
     "histograms": [
         {
             "type": "dethist",
@@ -28,7 +27,6 @@ CONFIG_JSON = {
             "height": HEIGHT,
             "topic": "local_visualisation",
             "id": "some_id",
-            "source": "grace",
         }
     ]
 }
