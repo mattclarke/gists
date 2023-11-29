@@ -34,28 +34,30 @@ hist_data = np.zeros([img.shape[0], img.shape[1]])
 config = {"bootstrap.servers": BROKER}
 producer = Producer(**config)
 
-CONFIG_JSON = {
-    "cmd": "config",
-    "input_schema": "ev44",
-    "output_schema": "hs01",
-    "histograms": [
-        {
-            "type": "dethist",
-            "data_brokers": [BROKER],
-            "data_topics": [OUTPUT_TOPIC],
-            "tof_range": [0, 100000000],
-            "det_range": [0, img.shape[0] * img.shape[1]],
-            "width": img.shape[1],
-            "height": img.shape[0],
-            "topic": "local_visualisation",
-            "id": "some_id",
-            "source": "grace",
-        }
-    ]
-}
-
-producer.produce("local_jbi_commands", bytes(json.dumps(CONFIG_JSON), "utf-8"))
-producer.flush()
+# uncomment this if you want to start just-bin-it histogramming
+#
+# CONFIG_JSON = {
+#     "cmd": "config",
+#     "input_schema": "ev44",
+#     "output_schema": "hs01",
+#     "histograms": [
+#         {
+#             "type": "dethist",
+#             "data_brokers": [BROKER],
+#             "data_topics": [OUTPUT_TOPIC],
+#             "tof_range": [0, 100000000],
+#             "det_range": [0, img.shape[0] * img.shape[1]],
+#             "width": img.shape[1],
+#             "height": img.shape[0],
+#             "topic": "local_visualisation",
+#             "id": "some_id",
+#             "source": "grace",
+#         }
+#     ]
+# }
+#
+# producer.produce("local_jbi_commands", bytes(json.dumps(CONFIG_JSON), "utf-8"))
+# producer.flush()
 
 try:
     while True:
@@ -77,11 +79,6 @@ try:
         time.sleep(0.5)
 except:
     pass
-
-# with open("example_ev44_fb.dat", "wb") as file:
-#     file.write(buffer)
-# print(buffer)
-
 
 fig = plt.figure(1)
 x, y = np.meshgrid(list(range(img.shape[0] + 1)), list(range(img.shape[1] + 1)))
