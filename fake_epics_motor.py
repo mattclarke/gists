@@ -25,6 +25,7 @@ sevr_pv = SharedPV(nt=NTScalar('d'), initial=0)
 stat_pv = SharedPV(nt=NTScalar('d'), initial=0)
 rdbd_pv = SharedPV(nt=NTScalar('d'), initial=0.01)
 desc_pv = SharedPV(nt=NTScalar('s'), initial="a fake motor")
+foff_pv = SharedPV(nt=NTScalar('b'), initial=False)
 
 
 def move():
@@ -93,4 +94,5 @@ Server.forever(providers=[{
     'fake:motor.STAT': stat_pv,
     'fake:motor.RDBD': rdbd_pv,
     'fake:motor.DESC': desc_pv,
+    'fake:motor.FOFF': foff_pv,
 }])
