@@ -82,6 +82,8 @@ Server.forever(providers=[{
     'fake:motor.HOMR': homr_pv,
     'fake:motor.VELO': velo_pv,
     'fake:motor.OFF': off_pv,
+    'fake:motor.LLM': llm_pv,
+    'fake:motor.HLM': hlm_pv,
     'fake:motor.LVIO': lvio_pv,
     'fake:motor.LLS': lls_pv,
     'fake:motor.HLS': hls_pv,
