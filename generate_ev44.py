@@ -62,6 +62,9 @@ producer = Producer(**config)
 try:
     while True:
         det_ids = []
+        tofs = []
+        time_start = time.time_ns()
+        time_mono = time.monotonic_ns()
 
         for _ in range(5000):
             pixel = random.randint(0, num_pixels - 1)
@@ -71,12 +74,13 @@ try:
             if chance < img[row][col]:
                 hist_data[row][col] += 1
                 det_ids.append(pixel)  # det ids start at 1
+                tofs.append(time.monotonic_ns() - time_mono)
 
-        time_ns = time.time_ns()
-        buffer = serialise_ev44("grace", time_ns, [time_ns], [0], det_ids, det_ids)
+        buffer = serialise_ev44("grace", time_start, [time_start], [0], tofs, det_ids)
         producer.produce(OUTPUT_TOPIC, buffer)
         producer.flush()
         time.sleep(0.5)
+
 except:
     pass
 
