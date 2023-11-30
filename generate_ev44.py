@@ -34,32 +34,37 @@ hist_data = np.zeros([img.shape[0], img.shape[1]])
 config = {"bootstrap.servers": BROKER}
 producer = Producer(**config)
 
-CONFIG_JSON = {
-    "cmd": "config",
-    "input_schema": "ev44",
-    "output_schema": "hs01",
-    "histograms": [
-        {
-            "type": "dethist",
-            "data_brokers": [BROKER],
-            "data_topics": [OUTPUT_TOPIC],
-            "tof_range": [0, 100000000],
-            "det_range": [0, img.shape[0] * img.shape[1]],
-            "width": img.shape[1],
-            "height": img.shape[0],
-            "topic": "local_visualisation",
-            "id": "some_id",
-            "source": "grace",
-        }
-    ]
-}
-
-producer.produce("local_jbi_commands", bytes(json.dumps(CONFIG_JSON), "utf-8"))
-producer.flush()
+# uncomment this if you want to start just-bin-it histogramming
+#
+# CONFIG_JSON = {
+#     "cmd": "config",
+#     "input_schema": "ev44",
+#     "output_schema": "hs01",
+#     "histograms": [
+#         {
+#             "type": "dethist",
+#             "data_brokers": [BROKER],
+#             "data_topics": [OUTPUT_TOPIC],
+#             "tof_range": [0, 100000000],
+#             "det_range": [0, img.shape[0] * img.shape[1]],
+#             "width": img.shape[1],
+#             "height": img.shape[0],
+#             "topic": "local_visualisation",
+#             "id": "some_id",
+#             "source": "grace",
+#         }
+#     ]
+# }
+#
+# producer.produce("local_jbi_commands", bytes(json.dumps(CONFIG_JSON), "utf-8"))
+# producer.flush()
 
 try:
     while True:
         det_ids = []
+        tofs = []
+        time_start = time.time_ns()
+        time_mono = time.monotonic_ns()
 
         for _ in range(5000):
             pixel = random.randint(0, num_pixels - 1)
@@ -69,19 +74,15 @@ try:
             if chance < img[row][col]:
                 hist_data[row][col] += 1
                 det_ids.append(pixel)  # det ids start at 1
+                tofs.append(time.monotonic_ns() - time_mono)
 
-        time_ns = time.time_ns()
-        buffer = serialise_ev44("grace", time_ns, [time_ns], [0], det_ids, det_ids)
+        buffer = serialise_ev44("grace", time_start, [time_start], [0], tofs, det_ids)
         producer.produce(OUTPUT_TOPIC, buffer)
         producer.flush()
         time.sleep(0.5)
+
 except:
     pass
-
-# with open("example_ev44_fb.dat", "wb") as file:
-#     file.write(buffer)
-# print(buffer)
-
 
 fig = plt.figure(1)
 x, y = np.meshgrid(list(range(img.shape[0] + 1)), list(range(img.shape[1] + 1)))
