@@ -1,16 +1,19 @@
 import configargparse as argparse
 from confluent_kafka import Producer
-from streaming_data_types.fbschemas.forwarder_config_update_rf5k.UpdateType import \
+from streaming_data_types.fbschemas.forwarder_config_update_fc00.UpdateType import \
     UpdateType
-from streaming_data_types.forwarder_config_update_rf5k import (Protocol,
+from streaming_data_types.forwarder_config_update_fc00 import (Protocol,
                                                                StreamInfo,
-                                                               serialise_rf5k)
+                                                               serialise_fc00)
 
 STREAMS = [
-    # StreamInfo("YMIR-4004:MC-Rz-01:m.RBV", "f144", "nido_devices", Protocol.Protocol.PVA),
-    # StreamInfo("BIFRO-ChpSy2:Ctrl-EVR-001:00-TS-I", "tdct", "bifrost_choppers", Protocol.Protocol.PVA),
-    # StreamInfo("BIFRO-ChpSy2:Ctrl-EVR-001:01-TS-I", "tdct", "bifrost_choppers", Protocol.Protocol.PVA),
-    # StreamInfo("BIFRO-ChpSy2:Chop-BWC-101:Spd_R", "f144", "bifrost_choppers", Protocol.Protocol.PVA),
+    StreamInfo(
+        "BIFRO-ChpSy2:Chop-BWC-101:Spd_R",
+        "f144",
+        "bifrost_motion",
+        Protocol.Protocol.PVA,
+        1,
+    ),
 ]
 
 
@@ -30,9 +33,8 @@ def generate_config(user, password, brokers, staging):
 
 def main(config, topic):
     producer = Producer(**config)
-    producer.produce(topic, serialise_rf5k(UpdateType.ADD, STREAMS))
-    # producer.produce(topic, serialise_rf5k(UpdateType.REMOVEALL, []))
-
+    producer.produce(topic, serialise_fc00(UpdateType.REMOVEALL, []))
+    producer.produce(topic, serialise_fc00(UpdateType.ADD, STREAMS))
     producer.flush()
 
 
