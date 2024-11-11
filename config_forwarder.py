@@ -8,7 +8,7 @@ from streaming_data_types.forwarder_config_update_fc00 import (Protocol,
 
 STREAMS = [
     StreamInfo(
-        "BIFRO-ChpSy2:Chop-BWC-101:Spd_R",
+        "foo:bar:PNPHeartBeatCnt-S",
         "f144",
         "bifrost_motion",
         Protocol.Protocol.PVA,
@@ -34,7 +34,7 @@ def generate_config(user, password, brokers, staging):
 def main(config, topic):
     producer = Producer(**config)
     producer.produce(topic, serialise_fc00(UpdateType.REMOVEALL, []))
-    producer.produce(topic, serialise_fc00(UpdateType.ADD, STREAMS))
+    # producer.produce(topic, serialise_fc00(UpdateType.ADD, STREAMS))
     producer.flush()
 
 

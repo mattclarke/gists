@@ -48,6 +48,7 @@ def main(kafka_config, topic):
         time.sleep(0.1)
 
     result = deserialise_ADAr(msg.value())
+    print(result.dimensions)
 
     fig = plt.figure(1)
     x, y = np.meshgrid(list(range(result.data.shape[0] + 1)), list(range(result.data.shape[1] + 1)))

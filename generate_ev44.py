@@ -59,6 +59,9 @@ producer = Producer(**config)
 # producer.produce("local_jbi_commands", bytes(json.dumps(CONFIG_JSON), "utf-8"))
 # producer.flush()
 
+total_events = 0
+pulses = 0
+
 try:
     while True:
         det_ids = []
@@ -76,6 +79,8 @@ try:
                 det_ids.append(pixel)  # det ids start at 1
                 tofs.append(time.monotonic_ns() - time_mono)
 
+        total_events += len(tofs)
+        pulses += 1
         buffer = serialise_ev44("grace", time_start, [time_start], [0], tofs, det_ids)
         producer.produce(OUTPUT_TOPIC, buffer)
         producer.flush()
@@ -83,6 +88,8 @@ try:
 
 except:
     pass
+
+print(total_events, pulses)
 
 fig = plt.figure(1)
 x, y = np.meshgrid(list(range(img.shape[0] + 1)), list(range(img.shape[1] + 1)))
